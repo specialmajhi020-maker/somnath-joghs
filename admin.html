@@ -1,49 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin - Add Book</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Joghs Sahaspur</title>
 <style>
-body{font-family:Arial;background:#eef2f5;padding:30px;}
-.container{background:white;width:400px;margin:auto;padding:25px;border-radius:10px;box-shadow:0 0 8px #888;}
-input,select{width:100%;padding:10px;margin-top:10px;}
-button{margin-top:15px;padding:12px;width:100%;background:#1e88e5;border:none;color:white;font-size:16px;border-radius:6px;}
+body{font-family:Arial, sans-serif;background:#eef2f5;margin:0;}
+header{background:#0d47a1;color:white;padding:15px;text-align:center;font-size:24px;}
+nav{background:#1565c0;padding:10px;display:flex;gap:10px;flex-wrap:wrap;}
+nav button{padding:10px 15px;background:white;border:none;border-radius:5px;cursor:pointer;}
+nav button:hover{background:#cfd8dc;}
+section{padding:20px;display:none;}
+.container{background:white;padding:20px;margin:20px auto;border-radius:10px;box-shadow:0 0 8px #888; max-width:800px;}
+input,select,textarea{width:100%;padding:10px;margin-top:10px;}
+button.submit{margin-top:15px;padding:12px;width:100%;background:#1e88e5;border:none;color:white;font-size:16px;border-radius:6px;cursor:pointer;}
+button.submit:hover{background:#1565c0;}
+table{width:100%;border-collapse:collapse;margin-top:15px;}
+table, th, td{border:1px solid #ccc;}
+th, td{padding:10px;text-align:left;}
+th{background:#0d47a1;color:white;}
 </style>
 </head>
-
 <body>
-<div class="container">
-<h2>Add New Book</h2>
 
-<input type="text" id="title" placeholder="Book Title">
-<input type="text" id="thumb" placeholder="Thumbnail path (assets/thumbnails/...)">
-<input type="text" id="pdf" placeholder="PDF path (assets/pdfs/...)">
+<header>Admin Dashboard - Joghs Sahaspur</header>
 
-<select id="cat">
-  <option>Science</option>
-  <option>Maths</option>
-  <option>English</option>
-  <option>History</option>
-  <option>Story</option>
-</select>
+<nav>
+  <button onclick="showSection('books')">Books</button>
+  <button onclick="showSection('materials')">Study Materials</button>
+  <button onclick="showSection('exams')">Online Exams</button>
+  <button onclick="showSection('results')">Results</button>
+</nav>
 
-<button onclick="generate()">Generate JSON Entry</button>
+<!-- BOOKS SECTION -->
+<section id="books">
+  <div class="container">
+    <h2>Manage Books</h2>
+    <input type="text" id="bookTitle" placeholder="Book Title">
+    <input type="file" id="bookThumbFile" accept="image/*">
+    <input type="file" id="bookPDFFile" accept="application/pdf">
+    <select id="bookCategory">
+      <option>Science</option>
+      <option>Maths</option>
+      <option>English</option>
+      <option>History</option>
+      <option>Story</option>
+    </select>
+    <button class="submit" onclick="addBook()">Add/Update Book</button>
 
-<p id="output"></p>
-</div>
+    <h3>Books List</h3>
+    <table id="booksTable">
+      <thead><tr><th>Title</th><th>Category</th><th>Thumbnail</th><th>PDF</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STUDY MATERIALS SECTION -->
+<section id="materials">
+  <div class="container">
+    <h2>Study Materials</h2>
+    <input type="text" id="materialTitle" placeholder="Material Title">
+    <input type="file" id="materialPDFFile" accept="application/pdf">
+    <select id="materialCategory">
+      <option>Science</option>
+      <option>Maths</option>
+      <option>English</option>
+      <option>History</option>
+      <option>Story</option>
+    </select>
+    <button class="submit" onclick="addMaterial()">Add Material</button>
+
+    <h3>Materials List</h3>
+    <table id="materialsTable">
+      <thead><tr><th>Title</th><th>Category</th><th>PDF</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ONLINE EXAMS SECTION -->
+<section id="exams">
+  <div class="container">
+    <h2>Create Online Exam</h2>
+    <input type="text" id="examTitle" placeholder="Exam Title">
+    <input type="text" id="examSubject" placeholder="Subject">
+    <textarea id="examQuestions" placeholder='Add questions in JSON format. Example: [{"question":"Q1","options":["A","B","C","D"],"answer":"A"}]'></textarea>
+    <button class="submit" onclick="addExam()">Create Exam</button>
+
+    <h3>Exams List</h3>
+    <table id="examsTable">
+      <thead><tr><th>Title</th><th>Subject</th><th>Questions</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- RESULTS SECTION -->
+<section id="results">
+  <div class="container">
+    <h2>Exam Results</h2>
+    <table id="resultsTable">
+      <thead><tr><th>Student</th><th>Exam</th><th>Score</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
 
 <script>
-function generate(){
-    let data = {
-        title: document.getElementById("title").value,
-        category: document.getElementById("cat").value,
-        thumbnail: document.getElementById("thumb").value,
-        pdf: document.getElementById("pdf").value
-    };
-
-    document.getElementById("output").innerText =
-        JSON.stringify(data, null, 4) +
-        ",  ← copy this into books.json";
+// SECTION NAVIGATION
+function showSection(id){
+  document.querySelectorAll('section').forEach(s => s.style.display='none');
+  document.getElementById(id).style.display='block';
 }
+
+// LOCAL STORAGE
+let books = JSON.parse(localStorage.getItem('books') || '[]');
+let materials = JSON.parse(localStorage.getItem('materials') || '[]');
+let exams = JSON.parse(localStorage.getItem('exams') || '[]');
+let results = JSON.parse(localStorage.getItem('results') || '[]');
+
+// HELPER: Convert file to base64
+function fileToBase64(file, callback){
+  const reader = new FileReader();
+  reader.onload = () => callback(reader.result);
+  reader.readAsDataURL(file);
+}
+
+// BOOKS
+function addBook(){
+  let title = document.getElementById('bookTitle').value.trim();
+  let category = document.getElementById('bookCategory').value;
+  let thumbFile = document.getElementById('bookThumbFile').files[0];
+  let pdfFile = document.getElementById('bookPDFFile').files[0];
+  if(!title || !thumbFile || !pdfFile){ alert('Fill all fields and select files'); return; }
+
+  fileToBase64(thumbFile, thumbData => {
+    fileToBase64(pdfFile, pdfData => {
+      // Check if book exists
+      let index = books.findIndex(b=>b.title===title);
+      let bookObj = {title,category,thumbnail:thumbData,pdf:pdfData};
+      if(index>-1) books[index]=bookObj;
+      else books.push(bookObj);
+
+      localStorage.setItem('books', JSON.stringify(books));
+      renderBooks();
+      alert('Book added/updated');
+      document.getElementById('bookTitle').value='';
+      document.getElementById('bookThumbFile').value='';
+      document.getElementById('bookPDFFile').value='';
+    });
+  });
+}
+function renderBooks(){
+  let tbody = document.querySelector('#booksTable tbody'); tbody.innerHTML='';
+  books.forEach((b,i)=>{
+    tbody.innerHTML += `<tr>
+      <td>${b.title}</td>
+      <td>${b.category}</td>
+      <td><img src="${b.thumbnail}" width="50"></td>
+      <td><a href="${b.pdf}" target="_blank">PDF</a></td>
+      <td><button onclick="deleteBook(${i})">Delete</button></td>
+    </tr>`;
+  });
+}
+function deleteBook(i){ books.splice(i,1); localStorage.setItem('books',JSON.stringify(books)); renderBooks(); }
+
+// STUDY MATERIALS
+function addMaterial(){
+  let title = document.getElementById('materialTitle').value.trim();
+  let category = document.getElementById('materialCategory').value;
+  let pdfFile = document.getElementById('materialPDFFile').files[0];
+  if(!title || !pdfFile){ alert('Fill all fields'); return; }
+  fileToBase64(pdfFile, pdfData=>{
+    materials.push({title,category,pdf:pdfData});
+    localStorage.setItem('materials', JSON.stringify(materials));
+    renderMaterials();
+    document.getElementById('materialTitle').value='';
+    document.getElementById('materialPDFFile').value='';
+  });
+}
+function renderMaterials(){
+  let tbody = document.querySelector('#materialsTable tbody'); tbody.innerHTML='';
+  materials.forEach((m,i)=>{
+    tbody.innerHTML += `<tr>
+      <td>${m.title}</td>
+      <td>${m.category}</td>
+      <td><a href="${m.pdf}" target="_blank">PDF</a></td>
+      <td><button onclick="deleteMaterial(${i})">Delete</button></td>
+    </tr>`;
+  });
+}
+function deleteMaterial(i){ materials.splice(i,1); localStorage.setItem('materials',JSON.stringify(materials)); renderMaterials(); }
+
+// EXAMS
+function addExam(){
+  let title = document.getElementById('examTitle').value.trim();
+  let subject = document.getElementById('examSubject').value.trim();
+  let questions = document.getElementById('examQuestions').value.trim();
+  if(!title || !subject || !questions){ alert('Fill all fields'); return; }
+  try{ questions = JSON.parse(questions); } catch(e){ alert('Invalid JSON'); return; }
+  exams.push({title,subject,questions});
+  localStorage.setItem('exams',JSON.stringify(exams));
+  renderExams();
+  document.getElementById('examTitle').value='';
+  document.getElementById('examSubject').value='';
+  document.getElementById('examQuestions').value='';
+}
+function renderExams(){
+  let tbody = document.querySelector('#examsTable tbody'); tbody.innerHTML='';
+  exams.forEach((e,i)=>{
+    tbody.innerHTML += `<tr>
+      <td>${e.title}</td>
+      <td>${e.subject}</td>
+      <td>${JSON.stringify(e.questions)}</td>
+      <td><button onclick="deleteExam(${i})">Delete</button></td>
+    </tr>`;
+  });
+}
+function deleteExam(i){ exams.splice(i,1); localStorage.setItem('exams',JSON.stringify(exams)); renderExams(); }
+
+// RESULTS
+function renderResults(){
+  let tbody = document.querySelector('#resultsTable tbody'); tbody.innerHTML='';
+  results.forEach(r=>{
+    tbody.innerHTML += `<tr><td>${r.student}</td><td>${r.exam}</td><td>${r.score}</td></tr>`;
+  });
+}
+
+// INITIAL RENDER
+renderBooks(); renderMaterials(); renderExams(); renderResults();
 </script>
+
 </body>
 </html>
