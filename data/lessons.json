@@ -1,0 +1,14 @@
+[
+  {
+    "id": "lesson1",
+    "title": "Addition",
+    "videoURL": "assets/videos/addition.mp4",
+    "pdfURL": "assets/pdfs/addition.pdf"
+  },
+  {
+    "id": "lesson2",
+    "title": "Subtraction",
+    "videoURL": "assets/videos/subtraction.mp4",
+    "pdfURL": "assets/pdfs/subtraction.pdf"
+  }
+]

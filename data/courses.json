@@ -1,0 +1,14 @@
+[
+  {
+    "id": "course1",
+    "title": "Mathematics",
+    "description": "Basic math course",
+    "lessons": ["lesson1", "lesson2"]
+  },
+  {
+    "id": "course2",
+    "title": "Science",
+    "description": "Basic science course",
+    "lessons": ["lesson3"]
+  }
+]

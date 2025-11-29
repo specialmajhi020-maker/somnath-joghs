@@ -1,0 +1,19 @@
+[
+  {
+    "id": "quiz1",
+    "courseId": "course1",
+    "title": "Math Quiz 1",
+    "questions": [
+      {
+        "question": "2 + 2 = ?",
+        "options": ["3", "4", "5"],
+        "correct": 1
+      },
+      {
+        "question": "5 - 3 = ?",
+        "options": ["1", "2", "3"],
+        "correct": 1
+      }
+    ]
+  }
+]
