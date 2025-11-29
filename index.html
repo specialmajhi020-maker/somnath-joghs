@@ -6,139 +6,151 @@
 <title>Joghs Sahaspur – Home</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
 
-    /* NAVBAR */
-    nav {
-        background: #0d47a1;
-        padding: 12px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: white;
-    }
+/* NAVBAR */
+nav {
+    background: #0d47a1;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
 
-    nav .logo {
-        font-size: 26px;
-        font-weight: bold;
-    }
+nav .logo {
+    font-size: 26px;
+    font-weight: bold;
+}
 
-    nav ul {
-        list-style: none;
-        display: flex;
-        gap: 25px;
-        margin: 0;
-        padding: 0;
-    }
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
 
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-    }
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
 
-    nav ul li a:hover {
-        text-decoration: underline;
-    }
+nav ul li a:hover {
+    text-decoration: underline;
+}
 
-    /* HERO SECTION */
-    .hero {
-        background: url('https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
-        height: 330px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: white;
-        padding: 20px;
-    }
+/* HERO SECTION */
+.hero {
+    background: url('https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+    height: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
 
+.hero h1 {
+    font-size: 40px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+/* FEATURES */
+.features {
+    padding: 30px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.feature-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.feature-box h3 {
+    margin-bottom: 10px;
+    color: #0d47a1;
+}
+
+/* SECTION TITLE */
+.section-title {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #0d47a1;
+}
+
+/* COURSE CARDS */
+.courses {
+    padding: 25px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.course-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.course-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.course-card h4 {
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #0d47a1;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #1565c0;
+}
+
+/* FOOTER */
+footer {
+    background: #0d47a1;
+    text-align: center;
+    padding: 15px;
+    color: white;
+    margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
     .hero h1 {
-        font-size: 40px;
-        background: rgba(0,0,0,0.5);
-        padding: 10px 20px;
-        border-radius: 8px;
-    }
-
-    /* FEATURES */
-    .features {
-        padding: 30px;
-        display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .feature-box {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    .feature-box h3 {
-        margin-bottom: 10px;
-        color: #0d47a1;
-    }
-
-    /* SECTION TITLE */
-    .section-title {
-        text-align: center;
-        margin-top: 30px;
         font-size: 28px;
-        font-weight: bold;
-        color: #0d47a1;
+        padding: 5px 10px;
     }
-
-    /* COURSE CARDS */
-    .courses {
-        padding: 25px;
-        display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    }
-
-    .course-card {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        text-align: center;
-    }
-
-    .course-card img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 6px;
-    }
-
-    .course-card h4 {
-        margin-top: 10px;
-    }
-
-    .btn {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 12px;
-        background: #0d47a1;
-        color: white;
-        border-radius: 6px;
-        text-decoration: none;
-    }
-
-    /* FOOTER */
-    footer {
-        background: #0d47a1;
-        text-align: center;
-        padding: 15px;
-        color: white;
-        margin-top: 20px;
-    }
+}
 </style>
 
 </head>
@@ -149,8 +161,10 @@
     <div class="logo">Joghs Sahaspur</div>
     <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="library.html">Library</a></li>
+        <li><a href="online-classes.html">Online Classes</a></li>
+        <li><a href="online-exams.html">Online Exams</a></li>
+        <li><a href="digital-library.html">Digital Library</a></li>
+        <li><a href="study-material.html">Study Materials</a></li>
         <li><a href="login.html">Login</a></li>
     </ul>
 </nav>
@@ -165,21 +179,25 @@
     <div class="feature-box">
         <h3>📘 Online Classes</h3>
         <p>Access lessons anytime with structured class resources.</p>
+        <a class="btn" href="online-classes.html">View Classes</a>
     </div>
 
     <div class="feature-box">
         <h3>📝 Online Exams</h3>
         <p>Attempt quizzes and auto-graded tests instantly.</p>
+        <a class="btn" href="online-exams.html">Take Exams</a>
     </div>
 
     <div class="feature-box">
         <h3>📚 Digital Library</h3>
         <p>100+ books, PDFs, notes for Classes 9 and 10.</p>
+        <a class="btn" href="digital-library.html">Open Library</a>
     </div>
 
     <div class="feature-box">
         <h3>🎓 Study Materials</h3>
         <p>NCERT books, sample papers, guides & more.</p>
+        <a class="btn" href="study-material.html">Download Materials</a>
     </div>
 </div>
 
@@ -188,27 +206,27 @@
 
 <div class="courses">
     <div class="course-card">
-        <img src="https://img.freepik.com/free-vector/science-subject-illustration_1308-29111.jpg" />
+        <img src="https://img.freepik.com/free-vector/science-subject-illustration_1308-29111.jpg" alt="Science Course" />
         <h4>Science (Class 9–10)</h4>
-        <a class="btn" href="courses.html">View Courses</a>
+        <a class="btn" href="online-classes.html">View Classes</a>
     </div>
 
     <div class="course-card">
-        <img src="https://img.freepik.com/free-vector/math-concept-illustration_114360-1671.jpg" />
+        <img src="https://img.freepik.com/free-vector/math-concept-illustration_114360-1671.jpg" alt="Math Course" />
         <h4>Mathematics</h4>
-        <a class="btn" href="courses.html">View Courses</a>
+        <a class="btn" href="online-classes.html">View Classes</a>
     </div>
 
     <div class="course-card">
-        <img src="https://img.freepik.com/free-vector/literature-concept-illustration_114360-3959.jpg" />
+        <img src="https://img.freepik.com/free-vector/literature-concept-illustration_114360-3959.jpg" alt="English Course" />
         <h4>English & Literature</h4>
-        <a class="btn" href="courses.html">View Courses</a>
+        <a class="btn" href="online-classes.html">View Classes</a>
     </div>
 
     <div class="course-card">
-        <img src="https://img.freepik.com/free-vector/books-stack-realistic_1284-4736.jpg" />
+        <img src="https://img.freepik.com/free-vector/books-stack-realistic_1284-4736.jpg" alt="Digital Library" />
         <h4>Digital Library</h4>
-        <a class="btn" href="library.html">Open Library</a>
+        <a class="btn" href="digital-library.html">Open Library</a>
     </div>
 </div>
 
