@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz – Joghs Sahaspur</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: #1976d2;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+        color: #1976d2;
+    }
+
+    .question {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .options label {
+        display: block;
+        margin: 6px 0;
+        padding: 8px;
+        background: #f0f0f0;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .options input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .options label:hover {
+        background: #d9eaff;
+    }
+
+    #submit-btn {
+        background: #1976d2;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    #submit-btn:hover {
+        background: #0d47a1;
+    }
+
+    #result {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: green;
+    }
+</style>
+</head>
+<body>
+
+<header>📝 Quiz</header>
+
+<div id="quiz-container">
+    <h2>Quiz</h2>
+    <div id="questions"></div>
+    <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+    <div id="result"></div>
+</div>
+
+<script>
+let quizData = [];
+let userAnswers = [];
+
+// Get course/lesson ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const lessonId = urlParams.get('lesson_id');
+
+// Load quizzes.json
+fetch('quizzes.json')
+    .then(res => res.json())
+    .then(data => {
+        // Filter quiz for this lesson
+        quizData = data.filter(q => q.lesson_id == lessonId);
+        displayQuiz(quizData);
+    });
+
+// Display Quiz Questions
+function displayQuiz(questions) {
+    const container = document.getElementById('questions');
+    container.innerHTML = "";
+
+    if(questions.length === 0) {
+        container.innerHTML = "<p>No quiz available for this lesson.</p>";
+        document.getElementById("submit-btn").style.display = "none";
+        return;
+    }
+
+    questions.forEach((q, index) => {
+        container.innerHTML += `
+            <div class="question-block">
+                <div class="question">${index+1}. ${q.question}</div>
+                <div class="options">
+                    ${q.options.map((opt, i) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${i}"> ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Submit Quiz
+function submitQuiz() {
+    let score = 0;
+
+    quizData.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if(selected && parseInt(selected.value) === q.answer) {
+            score++;
+        }
+    });
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.textContent = `You scored ${score} out of ${quizData.length}`;
+}
+</script>
+
+</body>
+</html>

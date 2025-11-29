@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – Joghs Sahaspur</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        background: white;
+        padding: 30px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    .login-container h2 {
+        margin-bottom: 20px;
+        color: #1976d2;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 90%;
+        padding: 12px 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .login-container input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    .login-container button {
+        width: 95%;
+        padding: 12px;
+        background: #1976d2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 12px;
+    }
+
+    .login-container button:hover {
+        background: #0d47a1;
+    }
+
+    .login-container .forgot {
+        display: block;
+        margin-top: 12px;
+        color: #1976d2;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .login-container .forgot:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    <input type="text" id="username" placeholder="Username" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+
+    <label><input type="checkbox" id="remember"> Remember me</label><br>
+
+    <button onclick="login()">Login</button>
+
+    <a href="#" class="forgot">Forgot Password?</a>
+</div>
+
+<script>
+function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // Sample check (Replace with your backend logic)
+    if(username === "admin" && password === "admin123") {
+        alert("Login Successful!");
+        window.location.href = "admin.html"; // redirect to admin page
+    } else {
+        alert("Invalid username or password!");
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lessons – Joghs Sahaspur</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: #1976d2;
+        padding: 14px 20px;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        background: #fff;
+        padding: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    select, input {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #aaa;
+    }
+
+    #lesson-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .lesson-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .lesson-card:hover {
+        transform: scale(1.03);
+    }
+
+    .lesson-card h3 {
+        margin: 10px 0 5px;
+        color: #1976d2;
+    }
+
+    .lesson-card p {
+        margin: 5px 0;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 12px;
+        background: #1976d2;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<header>📖 Lessons</header>
+
+<div id="filters">
+    <select id="chapterFilter">
+        <option value="all">Select Chapter</option>
+    </select>
+
+    <input type="text" id="searchInput" placeholder="Search lesson...">
+</div>
+
+<div id="lesson-container"></div>
+
+<script>
+let lessonsData = [];
+
+// Get course ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const courseId = urlParams.get('id');
+
+// Load lessons.json
+fetch("lessons.json")
+    .then(res => res.json())
+    .then(data => {
+        // Filter lessons by course ID
+        lessonsData = data.filter(l => l.course_id == courseId);
+        populateChapterFilter();
+        displayLessons(lessonsData);
+    });
+
+// Populate chapter dropdown
+function populateChapterFilter() {
+    const chapters = [...new Set(lessonsData.map(l => l.chapter))];
+    const chapterFilter = document.getElementById('chapterFilter');
+
+    chapters.forEach(ch => {
+        const option = document.createElement('option');
+        option.value = ch;
+        option.textContent = ch;
+        chapterFilter.appendChild(option);
+    });
+}
+
+// Display lessons
+function displayLessons(list) {
+    const container = document.getElementById('lesson-container');
+    container.innerHTML = "";
+
+    if(list.length === 0){
+        container.innerHTML = "<h3>No lessons found...</h3>";
+        return;
+    }
+
+    list.forEach(lesson => {
+        container.innerHTML += `
+            <div class="lesson-card">
+                <h3>${lesson.title}</h3>
+                <p><b>Chapter:</b> ${lesson.chapter}</p>
+                <p>${lesson.description}</p>
+                <a class="btn" href="${lesson.content}" target="_blank">Open Lesson</a>
+            </div>
+        `;
+    });
+}
+
+// Filters
+document.getElementById('chapterFilter').addEventListener('change', filterLessons);
+document.getElementById('searchInput').addEventListener('keyup', filterLessons);
+
+function filterLessons() {
+    const chapter = document.getElementById('chapterFilter').value;
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+
+    const filtered = lessonsData.filter(lesson =>
+        (chapter === "all" || lesson.chapter === chapter) &&
+        lesson.title.toLowerCase().includes(searchText)
+    );
+
+    displayLessons(filtered);
+}
+</script>
+
+</body>
+</html>

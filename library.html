@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library – Joghs Sahaspur</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1e88e5;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #fff;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        select, input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+        }
+
+        #book-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .book-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .book-card:hover {
+            transform: scale(1.03);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 8px 10px;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-download {
+            background: #43a047;
+        }
+    </style>
+</head>
+<body>
+
+<header>📚 School Library – Joghs Sahaspur</header>
+
+<!-- FILTERS -->
+<div id="filters">
+
+    <!-- CLASS -->
+    <select id="classFilter">
+        <option value="all">Select Class</option>
+        <option value="9">Class 9</option>
+        <option value="10">Class 10</option>
+    </select>
+
+    <!-- SUBJECT -->
+    <select id="subjectFilter">
+        <option value="all">Select Subject</option>
+        <option value="Science">Science</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Odia">Odia</option>
+        <option value="Social Science">Social Science</option>
+        <option value="Computer">Computer</option>
+        <option value="Story">Story Books</option>
+    </select>
+
+    <!-- SEARCH -->
+    <input type="text" id="searchInput" placeholder="Search books...">
+</div>
+
+
+<!-- BOOK LIST -->
+<div id="book-container"></div>
+
+
+<script>
+let booksData = [];
+
+// Load books.json
+fetch("books.json")
+    .then(response => response.json())
+    .then(data => {
+        booksData = data;
+        displayBooks(data);
+    });
+
+// Display books
+function displayBooks(list) {
+    const container = document.getElementById("book-container");
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+        container.innerHTML = "<h3>No books found...</h3>";
+        return;
+    }
+
+    list.forEach(book => {
+        container.innerHTML += `
+            <div class="book-card">
+                <img src="${book.thumbnail}" alt="${book.title}">
+                <h3>${book.title}</h3>
+                <p><b>Class:</b> ${book.class}</p>
+                <p><b>Subject:</b> ${book.subject}</p>
+
+                <div class="actions">
+                    <a class="btn" href="${book.pdf}" target="_blank">Read</a>
+                    <a class="btn btn-download" href="${book.pdf}" download>Download</a>
+                </div>
+            </div>
+        `;
+    });
+}
+
+
+// Filters
+document.getElementById("classFilter").addEventListener("change", filterBooks);
+document.getElementById("subjectFilter").addEventListener("change", filterBooks);
+document.getElementById("searchInput").addEventListener("keyup", filterBooks);
+
+function filterBooks() {
+    const cls = document.getElementById("classFilter").value;
+    const subject = document.getElementById("subjectFilter").value;
+    const searchText = document.getElementById("searchInput").value.toLowerCase();
+
+    const filtered = booksData.filter(book =>
+        (cls === "all" || book.class == cls) &&
+        (subject === "all" || book.subject === subject) &&
+        book.title.toLowerCase().includes(searchText)
+    );
+
+    displayBooks(filtered);
+}
+</script>
+
+</body>
+</html>

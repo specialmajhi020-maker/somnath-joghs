@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin - Add Book</title>
+<style>
+body{font-family:Arial;background:#eef2f5;padding:30px;}
+.container{background:white;width:400px;margin:auto;padding:25px;border-radius:10px;box-shadow:0 0 8px #888;}
+input,select{width:100%;padding:10px;margin-top:10px;}
+button{margin-top:15px;padding:12px;width:100%;background:#1e88e5;border:none;color:white;font-size:16px;border-radius:6px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>Add New Book</h2>
+
+<input type="text" id="title" placeholder="Book Title">
+<input type="text" id="thumb" placeholder="Thumbnail path (assets/thumbnails/...)">
+<input type="text" id="pdf" placeholder="PDF path (assets/pdfs/...)">
+
+<select id="cat">
+  <option>Science</option>
+  <option>Maths</option>
+  <option>English</option>
+  <option>History</option>
+  <option>Story</option>
+</select>
+
+<button onclick="generate()">Generate JSON Entry</button>
+
+<p id="output"></p>
+</div>
+
+<script>
+function generate(){
+    let data = {
+        title: document.getElementById("title").value,
+        category: document.getElementById("cat").value,
+        thumbnail: document.getElementById("thumb").value,
+        pdf: document.getElementById("pdf").value
+    };
+
+    document.getElementById("output").innerText =
+        JSON.stringify(data, null, 4) +
+        ",  ← copy this into books.json";
+}
+</script>
+</body>
+</html>

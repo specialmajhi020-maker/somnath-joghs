@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses – Joghs Sahaspur</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #1565c0;
+            padding: 14px;
+            text-align: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        #filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #fff;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        select, input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+        }
+
+        #course-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .course-card {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .course-card:hover {
+            transform: scale(1.04);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .btn {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 8px 12px;
+            background: #1565c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header>🎓 Courses – Joghs Sahaspur</header>
+
+<!-- FILTER AREA -->
+<div id="filters">
+    <select id="classFilter">
+        <option value="all">Select Class</option>
+        <option value="9">Class 9</option>
+        <option value="10">Class 10</option>
+    </select>
+
+    <select id="subjectFilter">
+        <option value="all">Select Subject</option>
+        <option value="Science">Science</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Odia">Odia</option>
+        <option value="Social Science">Social Science</option>
+        <option value="Computer">Computer</option>
+        <option value="Story">Story</option>
+    </select>
+
+    <input type="text" id="searchInput" placeholder="Search course...">
+</div>
+
+
+<!-- COURSE LIST -->
+<div id="course-container"></div>
+
+
+<script>
+let courseData = [];
+
+// Load courses.json
+fetch("courses.json")
+    .then(res => res.json())
+    .then(data => {
+        courseData = data;
+        displayCourses(data);
+    });
+
+function displayCourses(list) {
+    const container = document.getElementById("course-container");
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+        container.innerHTML = "<h3>No courses found...</h3>";
+        return;
+    }
+
+    list.forEach(course => {
+        container.innerHTML += `
+            <div class="course-card">
+                <img src="${course.thumbnail}" alt="${course.name}">
+                <h3>${course.name}</h3>
+                <p><b>Class:</b> ${course.class}</p>
+                <p><b>Subject:</b> ${course.subject}</p>
+
+                <a class="btn" href="lesson.html?id=${course.id}">
+                    View Lessons
+                </a>
+            </div>
+        `;
+    });
+}
+
+// Filters
+document.getElementById("classFilter").addEventListener("change", filterCourses);
+document.getElementById("subjectFilter").addEventListener("change", filterCourses);
+document.getElementById("searchInput").addEventListener("keyup", filterCourses);
+
+function filterCourses() {
+    const cls = document.getElementById("classFilter").value;
+    const sub = document.getElementById("subjectFilter").value;
+    const searchText = document.getElementById("searchInput").value.toLowerCase();
+
+    let filtered = courseData.filter(c =>
+        (cls === "all" || c.class == cls) &&
+        (sub === "all" || c.subject === sub) &&
+        c.name.toLowerCase().includes(searchText)
+    );
+
+    displayCourses(filtered);
+}
+</script>
+
+</body>
+</html>
