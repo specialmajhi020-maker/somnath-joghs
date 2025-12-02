@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "Science Book Class 9",
+    "class": "9",
+    "subject": "Science",
+    "language": "English",
+    "thumbnail": "thumbnails/science9.jpg",
+    "pdf": "books/science9.pdf"
+  },
+  {
+    "id": 2,
+    "title": "Mathematics Class 9",
+    "class": "9",
+    "subject": "Math",
+    "language": "English",
+    "thumbnail": "thumbnails/math9.jpg",
+    "pdf": "books/math9.pdf"
+  },
+  {
+    "id": 3,
+    "title": "English Literature 9",
+    "class": "9",
+    "subject": "English",
+    "language": "English",
+    "thumbnail": "thumbnails/eng9.jpg",
+    "pdf": "books/eng9.pdf"
+  },
+  {
+    "id": 4,
+    "title": "Hindi Vyakaran Class 9",
+    "class": "9",
+    "subject": "Hindi",
+    "language": "Hindi",
+    "thumbnail": "thumbnails/hindi9.jpg",
+    "pdf": "books/hindi9.pdf"
+  },
+  {
+    "id": 5,
+    "title": "Odia Sahitya Class 9",
+    "class": "9",
+    "subject": "Odia",
+    "language": "Odia",
+    "thumbnail": "thumbnails/odia9.jpg",
+    "pdf": "books/odia9.pdf"
+  },
+  {
+    "id": 6,
+    "title": "Science Book Class 10",
+    "class": "10",
+    "subject": "Science",
+    "language": "English",
+    "thumbnail": "thumbnails/science10.jpg",
+    "pdf": "books/science10.pdf"
+  },
+  {
+    "id": 7,
+    "title": "Mathematics Class 10",
+    "class": "10",
+    "subject": "Math",
+    "language": "English",
+    "thumbnail": "thumbnails/math10.jpg",
+    "pdf": "books/math10.pdf"
+  },
+  {
+    "id": 8,
+    "title": "English Literature 10",
+    "class": "10",
+    "subject": "English",
+    "language": "English",
+    "thumbnail": "thumbnails/eng10.jpg",
+    "pdf": "books/eng10.pdf"
+  },
+  {
+    "id": 9,
+    "title": "Hindi Vyakaran Class 10",
+    "class": "10",
+    "subject": "Hindi",
+    "language": "Hindi",
+    "thumbnail": "thumbnails/hindi10.jpg",
+    "pdf": "books/hindi10.pdf"
+  },
+  {
+    "id": 10,
+    "title": "Odia Sahitya Class 10",
+    "class": "10",
+    "subject": "Odia",
+    "language": "Odia",
+    "thumbnail": "thumbnails/odia10.jpg",
+    "pdf": "books/odia10.pdf"
+  },
+  {
+    "id": 11,
+    "title": "General Story Book",
+    "class": "All",
+    "subject": "Story",
+    "language": "English",
+    "thumbnail": "thumbnails/story1.jpg",
+    "pdf": "books/story1.pdf"
+  },
+  {
+    "id": 12,
+    "title": "Moral Stories for Kids",
+    "class": "All",
+    "subject": "Story",
+    "language": "Hindi",
+    "thumbnail": "thumbnails/story2.jpg",
+    "pdf": "books/story2.pdf"
+  }
+]
